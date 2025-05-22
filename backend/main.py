@@ -7,23 +7,38 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-# Load YOLOv5 model (first time will download weights)
-model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
+from ultralytics import YOLO
+model = YOLO("yolov5s.pt")
 
 @app.route('/detect', methods=['POST'])
 def detect():
     if 'image' not in request.files:
-        print("No image uploaded")
         return jsonify({'error': 'No image uploaded'}), 400
     try:
         img_bytes = request.files['image'].read()
         img = Image.open(io.BytesIO(img_bytes))
         results = model(img)
-        detections = results.pandas().xyxy[0].to_dict(orient="records")
-        print("Detections:", detections)  # <-- Add this line
+        # results is a list; get the first result
+        result = results[0]
+        detections = []
+        boxes = result.boxes
+        for box in boxes:
+            # box.xyxy[0] gives [xmin, ymin, xmax, ymax]
+            xmin, ymin, xmax, ymax = box.xyxy[0].tolist()
+            conf = float(box.conf[0])
+            cls = int(box.cls[0])
+            name = model.names[cls] if hasattr(model, "names") else str(cls)
+            detections.append({
+                "xmin": xmin,
+                "ymin": ymin,
+                "xmax": xmax,
+                "ymax": ymax,
+                "confidence": conf,
+                "class": cls,
+                "name": name
+            })
         return jsonify(detections)
     except Exception as e:
-        print("Error:", e)  # <-- Add this line
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
