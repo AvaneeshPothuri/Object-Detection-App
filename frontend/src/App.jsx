@@ -134,10 +134,10 @@ function App() {
               formData.append("image", image);
 
               try {
-                const response = await fetch("http://localhost:5000/detect", {
-                  method: "POST",
-                  body: formData,
-                });
+                const response = await fetch("https://object-detection-app-s1a2.onrender.com/detect", {
+                method: "POST",
+                body: formData,
+              });
                 const data = await response.json();
                 setDetections(data);
               } catch (error) {

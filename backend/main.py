@@ -1,14 +1,18 @@
 from flask import Flask, request, jsonify
-from PIL import Image
-import torch
-import io
 from flask_cors import CORS
+from PIL import Image
+from ultralytics import YOLO
+import io
+import os
 
 app = Flask(__name__)
 CORS(app)
 
-from ultralytics import YOLO
 model = YOLO("yolov5s.pt")
+
+@app.route('/')
+def home():
+    return "Object Detection API is running."
 
 @app.route('/detect', methods=['POST'])
 def detect():
@@ -18,12 +22,10 @@ def detect():
         img_bytes = request.files['image'].read()
         img = Image.open(io.BytesIO(img_bytes))
         results = model(img)
-        # results is a list; get the first result
         result = results[0]
         detections = []
         boxes = result.boxes
         for box in boxes:
-            # box.xyxy[0] gives [xmin, ymin, xmax, ymax]
             xmin, ymin, xmax, ymax = box.xyxy[0].tolist()
             conf = float(box.conf[0])
             cls = int(box.cls[0])
@@ -41,5 +43,6 @@ def detect():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
