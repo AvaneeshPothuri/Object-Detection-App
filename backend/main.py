@@ -8,7 +8,7 @@ import os
 app = Flask(__name__)
 CORS(app,origins=["https://object-detectionapp.netlify.app"])
 
-model = YOLO("yolov5s.pt")
+model = YOLO("yolov5n.pt")
 
 @app.route('/')
 def home():
@@ -25,6 +25,7 @@ def detect():
     try:
         img_bytes = request.files['image'].read()
         img = Image.open(io.BytesIO(img_bytes))
+        img = img.resize((640, 640))
         results = model(img)
         result = results[0]
         detections = []
