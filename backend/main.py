@@ -14,6 +14,10 @@ model = YOLO("yolov5s.pt")
 def home():
     return "Object Detection API is running."
 
+@app.route('/detect', methods=['GET'])
+def detect_get():
+    return "Detect GET route reached"
+
 @app.route('/detect', methods=['POST'])
 def detect():
     if 'image' not in request.files:
