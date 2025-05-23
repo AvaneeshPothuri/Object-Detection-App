@@ -68,11 +68,15 @@ object-detection-app/
 cd backend
 python -m venv venv
 ```
-```
 Activate venv (Windows)
+```
 venv\Scripts\activate
+```
 Activate venv (Linux/Mac)
+```
 source venv/bin/activate
+```
+```
 pip install -r requirements.txt
 python main.py
 ```
