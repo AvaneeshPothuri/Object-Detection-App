@@ -52,10 +52,11 @@ A professional, full-stack web application for object detection in images using 
 
 ## 🏗️ Project Structure
 
+```
 object-detection-app/
-├── frontend/ # React app (Netlify)
-├── backend/ # Flask API (Render)
-
+├── frontend/   # React app (Netlify)
+└── backend/    # Flask API (Render)
+```
 
 ---
 
