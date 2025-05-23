@@ -6,7 +6,7 @@ import io
 import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app,origins=["https://object-detectionapp.netlify.app"])
 
 model = YOLO("yolov5s.pt")
 
