@@ -64,24 +64,28 @@ object-detection-app/
 
 ### Backend (Flask + YOLOv5n)
 
+```
 cd backend
 python -m venv venv
-
+```
+```
 Activate venv (Windows)
 venv\Scripts\activate
-
+```
+```
 Activate venv (Linux/Mac)
 source venv/bin/activate
 pip install -r requirements.txt
 python main.py
-
+```
 
 ### Frontend (React)
 
+```
 cd frontend
 npm install
 npm run dev
-
+```
 
 ---
 
