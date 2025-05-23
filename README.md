@@ -31,16 +31,6 @@ A professional, full-stack web application for object detection in images using 
 
 ---
 
-## 📸 Screenshots
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/ultralytics/yolov5/master/data/images/zidane.jpg" alt="Sample detection" width="400"/>
-  <br>
-  <em>Sample object detection result</em>
-</p>
-
----
-
 ## 🧑‍💻 How It Works
 
 1. **Upload:** User uploads an image via the React frontend.
